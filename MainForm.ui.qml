@@ -6,26 +6,30 @@ Item {
     width: 640
     height: 480
 
-    property alias button3: button3
-    property alias button2: button2
-    property alias button1: button1
+    SplitView {
+        anchors.fill: parent
+        orientation: Qt.Horizontal
 
-    RowLayout {
-        anchors.centerIn: parent
-
-        Button {
-            id: button1
-            text: qsTr("Press Me 1")
+        Rectangle {
+            id: drawingView
+            Layout.minimumWidth: 300
+            Layout.fillWidth: true
+            color: "lightgray"
+            Text {
+                text: "drawingView"
+                anchors.centerIn: parent
+            }
         }
-
-        Button {
-            id: button2
-            text: qsTr("Press Me 2")
-        }
-
-        Button {
-            id: button3
-            text: qsTr("Press Me 3")
+        Rectangle {
+            id: editView
+            Layout.minimumWidth: 200
+            width: 200
+            color: "lightgreen"
+            Text {
+                text: "editView"
+                anchors.centerIn: parent
+            }
         }
     }
+
 }
