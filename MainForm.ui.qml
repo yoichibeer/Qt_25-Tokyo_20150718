@@ -8,6 +8,11 @@ Item {
     width: 640
     height: 480
 
+    property alias mouseArea: mouseArea
+    property alias squareBinding: squareBinding
+    property alias square: square
+    property alias xTextField: xTextField
+
     SplitView {
         anchors.fill: parent
         orientation: Qt.Horizontal
@@ -36,6 +41,7 @@ Item {
                 dragging: false
 
                 MouseArea {
+                    id: mouseArea
 
                     anchors.fill: parent
 
@@ -50,9 +56,6 @@ Item {
 
                     onPressed: square.dragging = true
                     onReleased: square.dragging = false
-
-                    onPositionChanged:
-                        squareBinding.x = square.x
                 }
             }
         }
@@ -64,15 +67,13 @@ Item {
             color: "#081a5c"
 
             TextField {
-                id: textField1
+                id: xTextField
                 x: 50
                 y: 50
                 placeholderText: qsTr("Text Field")
                 text: squareBinding.x
 
-                Keys.onReturnPressed: squareBinding.x = text
-                onFocusChanged: squareBinding.x = text
-
+//                Keys.onReturnPressed: squareBinding.x = text
             }
         }
     }

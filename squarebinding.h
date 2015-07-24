@@ -2,6 +2,7 @@
 #define SQUARE_H
 
 #include <QObject>
+#include "defs.h"
 
 class SquareBinding : public QObject
 {
@@ -27,8 +28,7 @@ private:
     double x_;
     double y_;
 
-    SquareBinding(const SquareBinding&) = delete;
-    SquareBinding& operator=(const SquareBinding&) = delete;
+    DISABLE_COPY(SquareBinding);
 };
 
 #endif // SQUARE_H

@@ -1,9 +1,10 @@
 TEMPLATE = app
 
-QT += qml quick widgets
+QT += qml quick widgets xml
 
 SOURCES += main.cpp \
-    squarebinding.cpp
+    squarebinding.cpp \
+    domcomparetest.cpp
 
 RESOURCES += qml.qrc
 
@@ -14,6 +15,8 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    squarebinding.h
+    squarebinding.h \
+    domcomparetest.h \
+    defs.h
 
 CONFIG += c++11
