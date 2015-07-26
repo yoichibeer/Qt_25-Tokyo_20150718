@@ -4,6 +4,7 @@ import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.0
 
 import Qt_24_Tokyo_20150718 1.0
@@ -103,6 +104,18 @@ ApplicationWindow {
                     onFocusChanged: {
                         updatePositionByPropertyChanged()
                     }
+                    style:TextFieldStyle { ///@ todo 重複
+                        id: textFieldStyle
+                        textColor: "white"
+                        background: Rectangle {
+                            color: "#081a5c"
+//                            radius: 2
+//                            implicitWidth: 100
+//                            implicitHeight: 24
+                            border.color: "#000"
+                            border.width: 1
+                        }
+                    }
                 }
                 TextField {
                     id: yTextField
@@ -111,6 +124,17 @@ ApplicationWindow {
                     KeyNavigation.tab: defaultButton
                     onFocusChanged: {
                         updatePositionByPropertyChanged()
+                    }
+                    style:TextFieldStyle {
+                        textColor: "white"
+                        background: Rectangle {
+                            color: "#081a5c"
+//                            radius: 2
+//                            implicitWidth: 100
+//                            implicitHeight: 24
+                            border.color: "#000"
+                            border.width: 1
+                        }
                     }
                 }
 
@@ -153,7 +177,7 @@ ApplicationWindow {
 
                         KeyNavigation.right: topRight
                         KeyNavigation.down: bottomLeft
-                        KeyNavigation.tab: xTextField
+                        KeyNavigation.tab: comboBoxCustom
                     }
 
                     Rectangle {
@@ -187,6 +211,39 @@ ApplicationWindow {
                         topLeft.forceActiveFocus()
                     }
 
+                    KeyNavigation.tab: comboBoxCustom
+                }
+
+                // カスタマイズは https://forum.qt.io/topic/32611/how-to-customize-combobox-from-qtquick-controls/7 参照
+                ComboBox {
+                    id: comboBoxCustom
+                    model: ListModel {
+                        id: cbItems
+                        ListElement { text: "Banana"; color: "yellow" }
+                        ListElement { text: "Apple"; color: "gray" }
+                        ListElement { text: "Coconut"; color: "purple" }
+                    }
+                    width: 200
+                    height: 25
+                    onCurrentIndexChanged: console.debug(currentText + ", " + cbItems.get(currentIndex).color)
+                    style: ComboBoxStyle {
+                        background: Rectangle {
+                            color: "#AAAAFF"
+                            radius: 5
+                        }
+                        textColor: "white"
+                        selectedTextColor: "red"
+                        selectionColor: "orange"
+                    }
+                    KeyNavigation.tab: comboBoxDefault
+                }
+                ComboBox {
+                    id: comboBoxDefault
+                    model: ListModel {
+                        ListElement { text: "Banana" }
+                        ListElement { text: "Apple" }
+                        ListElement { text: "Coconut" }
+                    }
                     KeyNavigation.tab: xTextField
                 }
             }
@@ -202,6 +259,15 @@ ApplicationWindow {
         squareBinding.x = xTextField.text
         squareBinding.y = yTextField.text
     }
+
+    // http://codecereal.blogspot.jp/2012/04/qml-themingstyling.html styleの一元管理できるかも
+//    ApplicationStyle {
+//        id: appStyle
+//        buttonStyle: CustomButtonStyle {
+//            background: "myButton.png"
+//            pressedBackground: "myPressedButton.png"
+//        }
+//    }
 
     MessageDialog {
         id: messageDialog
