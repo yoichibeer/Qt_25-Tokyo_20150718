@@ -28,21 +28,6 @@ ApplicationWindow {
         }
     }
 
-//    MainForm {
-//        anchors.fill: parent
-
-//        mouseArea.onPositionChanged: {
-//            squareBinding.x = square.x
-//            squareBinding.y = square.y
-//        }
-
-//        xTextField.onFocusChanged: {
-//            squareBinding.x = text
-//        }
-
-//        // xTextField { Keys.onReturnPressed: squareBinding.x = xTextField.text}
-//    }
-
     SplitView {
         anchors.fill: parent
         orientation: Qt.Horizontal
@@ -86,6 +71,15 @@ ApplicationWindow {
 
                     onPressed: square.dragging = true
                     onReleased: square.dragging = false
+
+                    onPositionChanged: {
+                        squareBinding.x = square.x
+                        squareBinding.y = square.y
+                    }
+
+                    onFocusChanged: {
+                        squareBinding.x = text
+                    }
                 }
             }
         }
@@ -93,19 +87,116 @@ ApplicationWindow {
         Rectangle {
             id: editView
             Layout.minimumWidth: 200
-            width: 200
+            width: 250
             color: "#081a5c"
+            Column {
+                spacing: 4
+                TextField {
+                    id: xTextField
+                    placeholderText: qsTr("x")
+                    text: squareBinding.x
+                    KeyNavigation.tab: yTextField
+                    onFocusChanged: {
+                        updatePosition()
+                    }
+                }
+                TextField {
+                    id: yTextField
+                    placeholderText: qsTr("y")
+                    text: squareBinding.y
+                    KeyNavigation.tab: defaultButton
+                    onFocusChanged: {
+                        updatePosition()
+                    }
+                }
 
-            TextField {
-                id: xTextField
-                x: 50
-                y: 50
-                placeholderText: qsTr("Text Field")
-                text: squareBinding.x
+                Row {
+                    spacing: 4
 
-                Keys.onReturnPressed: squareBinding.x = text
+                    Button {
+                        id: defaultButton
+                        isDefault: true
+                        activeFocusOnPress: true
+                        text: "Apply"
+                        onClicked: {
+                            console.debug("defaultButton pressed")
+                            squareBinding.x = xTextField.text
+                        }
+
+                        KeyNavigation.tab: grid
+                    }
+                    Text {
+                        anchors.verticalCenter: defaultButton.verticalCenter
+                        text: defaultButton.activeFocus ? "I have active focus!" : "I do not have active focus"
+                        color: "white"
+                    }
+                }
+                Button {
+                    isDefault: false
+                    text: "Non Default"
+                }
+
+                Grid {
+                    id: grid
+                    width: 100; height: 100
+                    columns: 2
+
+                    Rectangle {
+                        id: topLeft
+                        width: 50; height: 50
+                        color: focus ? "red" : "lightgray"
+                        focus: true
+
+                        KeyNavigation.right: topRight
+                        KeyNavigation.down: bottomLeft
+                        KeyNavigation.tab: xTextField
+                    }
+
+                    Rectangle {
+                        id: topRight
+                        width: 50; height: 50
+                        color: focus ? "red" : "lightgray"
+
+                        KeyNavigation.left: topLeft
+                        KeyNavigation.down: bottomRight
+                    }
+
+                    Rectangle {
+                        id: bottomLeft
+                        width: 50; height: 50
+                        color: focus ? "red" : "lightgray"
+
+                        KeyNavigation.right: bottomRight
+                        KeyNavigation.up: topLeft
+                    }
+
+                    Rectangle {
+                        id: bottomRight
+                        width: 50; height: 50
+                        color: focus ? "red" : "lightgray"
+
+                        KeyNavigation.left: bottomLeft
+                        KeyNavigation.up: topRight
+                    }
+
+                    onFocusChanged: {
+                        topLeft.forceActiveFocus()
+                    }
+
+                    KeyNavigation.tab: xTextField
+                }
+            }
+
+            Keys.onReturnPressed: {
+                updatePosition()
             }
         }
+    }
+
+    function updatePosition()
+    {
+        squareBinding.x = xTextField.text
+        squareBinding.y = yTextField.text
     }
 
     MessageDialog {
