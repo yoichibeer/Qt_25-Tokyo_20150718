@@ -1,4 +1,4 @@
-import QtQuick 2.4
+﻿import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
@@ -63,6 +63,8 @@ ApplicationWindow {
                     drag.target: square
                     drag.axis: Drag.XAndYAxis
 
+                    drag.threshold: 0
+
                     drag.minimumX: - square.width + 5
                     drag.maximumX: drawingView.width - 5
 
@@ -76,11 +78,13 @@ ApplicationWindow {
                         squareBinding.x = square.x
                         squareBinding.y = square.y
                     }
-
-                    onFocusChanged: {
-                        squareBinding.x = text
-                    }
                 }
+//                onXChanged: {
+//                    squareBinding.x = square.x
+//                }
+//                onYChanged: {
+//                    squareBinding.y = square.y
+//                }
             }
         }
 
@@ -97,7 +101,7 @@ ApplicationWindow {
                     text: squareBinding.x
                     KeyNavigation.tab: yTextField
                     onFocusChanged: {
-                        updatePosition()
+                        updatePositionByPropertyChanged()
                     }
                 }
                 TextField {
@@ -106,7 +110,7 @@ ApplicationWindow {
                     text: squareBinding.y
                     KeyNavigation.tab: defaultButton
                     onFocusChanged: {
-                        updatePosition()
+                        updatePositionByPropertyChanged()
                     }
                 }
 
@@ -188,12 +192,12 @@ ApplicationWindow {
             }
 
             Keys.onReturnPressed: {
-                updatePosition()
+                updatePositionByPropertyChanged()
             }
         }
     }
 
-    function updatePosition()
+    function updatePositionByPropertyChanged()
     {
         squareBinding.x = xTextField.text
         squareBinding.y = yTextField.text
