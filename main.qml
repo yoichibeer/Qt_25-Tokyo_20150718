@@ -261,9 +261,11 @@ ApplicationWindow {
                                 background: Component {
                                     Rectangle {
                                         color: "#FFAAAA"
-//                                        Image {
-//                                            source:
-//                                        }
+                                        Image {
+                                            source: "16px-Anchor_pictogram.svg.png"
+                                            anchors.right: parent.right
+                                            anchors.verticalCenter: parent.verticalCenter
+                                        }
                                     }
                                 }
 

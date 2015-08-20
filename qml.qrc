@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Constants.qml</file>
+        <file>16px-Anchor_pictogram.svg.png</file>
     </qresource>
 </RCC>
