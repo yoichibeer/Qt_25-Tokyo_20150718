@@ -269,8 +269,8 @@ ApplicationWindow {
                                     }
                                 }
 
-                                textColor: "white"
-                                selectedTextColor: "red"
+                                textColor: "yellow"
+                                selectedTextColor: "pink"
                                 selectionColor: "orange"
 //                                label: Component {
 //                                    Label {
@@ -279,6 +279,11 @@ ApplicationWindow {
 //                                        color: "red"
 //                                    }
 //                                }
+
+                                label: Text {
+                                    color: "red"
+                                    text: control.currentText
+                                }
 
                             }
                             KeyNavigation.tab: comboBoxDefault
