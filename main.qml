@@ -1,11 +1,11 @@
-﻿import QtQuick 2.4
+﻿import QtQuick 2.5
 import QtQuick.Dialogs 1.2
 
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.2
 
-import Qt_24_Tokyo_20150718 1.0
+import Qt_25_Tokyo_20150718 1.0
 
 ApplicationWindow {
     title: qsTr("Hello World")
