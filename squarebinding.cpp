@@ -38,7 +38,8 @@ QString SquareBinding::x() const
 }
 void SquareBinding::setX(QString xStr)
 {
-    if (x() == xStr)
+    qDebug() << "HELLO" << x() << ", " << xStr;
+    if (x() == QString::number(xStr.toDouble(), 'f', 2))
     {
         return;
     }
@@ -56,7 +57,7 @@ QString SquareBinding::y() const
 }
 void SquareBinding::setY(QString yStr)
 {
-    if (y() == yStr)
+    if (y() == QString::number(yStr.toDouble(), 'f', 2))
     {
         return;
     }
