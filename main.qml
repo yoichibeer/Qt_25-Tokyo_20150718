@@ -1,8 +1,8 @@
 ﻿import QtQuick 2.4
 import QtQuick.Dialogs 1.2
 
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 1.3
+import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
 
 import Qt_24_Tokyo_20150718 1.0
@@ -19,6 +19,7 @@ ApplicationWindow {
         Menu {
             title: qsTr("&File")
             MenuItem {
+                enabled: false
                 text: qsTr("&Open")
                 onTriggered: messageDialog.show(qsTr("Open action triggered"));
             }
@@ -26,7 +27,116 @@ ApplicationWindow {
                 text: qsTr("E&xit")
                 onTriggered: Qt.quit();
             }
+            style: MenuStyle {
+                    itemDelegate.label: Label {
+                    color: styleData.enabled ? "blue" : "skyblue"
+                    text: styleData.text
+
+                    // stuff above here
+                }
+            }
         }
+        Menu {
+            title: qsTr("&Help")
+            MenuItem {
+                text: qsTr("&About")
+                onTriggered: messageDialog.show(qsTr("About dialog"));
+            }
+        }
+        //http://stackoverflow.com/questions/31856207/how-to-change-the-font-color-of-a-menubar
+//        style: MenuBarStyle {
+
+//            padding {
+//                left: 8
+//                right: 8
+//                top: 3
+//                bottom: 3
+//            }
+
+//            background: Rectangle {
+//                id: rect
+//                border.color: menuBorderColor
+//                color: menuBackgroundColor
+//            }
+
+//            itemDelegate: Rectangle {            // the menus
+//                implicitWidth: lab.contentWidth * 1.4           // adjust width the way you prefer it
+//                implicitHeight: lab.contentHeight               // adjust height the way you prefer it
+//                color: styleData.selected || styleData.open ? "red" : "transparent"
+//                Label {
+//                    id: lab
+//                    anchors.horizontalCenter: parent.horizontalCenter
+//                    color: styleData.selected  || styleData.open ? "white" : "red"
+//                    font.wordSpacing: 10
+//                    text: styleData.text
+//                }
+//            }
+
+//            menuStyle: MenuStyle {               // the menus items
+//                id: goreStyle
+
+//                frame: Rectangle {
+//                    color: menuBackgroundColor
+//                }
+
+//                itemDelegate {
+//                    background: Rectangle {
+//                        color:  styleData.selected || styleData.open ? "red" : menuBackgroundColor
+//                        radius: styleData.selected ? 3 : 0
+//                    }
+
+//                    label: Label {
+//                        color: styleData.selected ? "white" : "red"
+//                        text: styleData.text
+//                    }
+
+//                    submenuIndicator: Text {
+//                        text: "\u25ba"
+//                        font: goreStyle.font
+//                        color: styleData.selected  || styleData.open ? "white" : "red"
+//                        styleColor: Qt.lighter(color, 4)
+//                    }
+
+//                    shortcut: Label {
+//                        color: styleData.selected ? "white" : "red"
+//                        text: styleData.shortcut
+//                    }
+
+//                    checkmarkIndicator: CheckBox {          // not strinctly a Checkbox. A Rectangle is fine too
+//                        checked: styleData.checked
+
+//                        style: CheckBoxStyle {
+
+//                            indicator: Rectangle {
+//                                implicitWidth: goreStyle.font.pixelSize
+//                                implicitHeight: implicitWidth
+//                                radius: 2
+//                                color: control.checked ?  "red" : menuBackgroundColor
+//                                border.color: control.activeFocus ? menuBackgroundColor : "red"
+//                                border.width: 2
+//                                Rectangle {
+//                                    visible: control.checked
+//                                    color: "red"
+//                                    border.color: menuBackgroundColor
+//                                    border.width: 2
+//                                    radius: 2
+//                                    anchors.fill: parent
+//                                }
+//                            }
+//                            spacing: 10
+//                        }
+//                    }
+//                }
+
+//                // scrollIndicator:               // <--- could be an image
+
+//                separator: Rectangle {
+//                    width: parent.width
+//                    implicitHeight: 2
+//                    color: "white"
+//                }
+//            }
+//        }
     }
 
     Constants {
@@ -258,20 +368,37 @@ ApplicationWindow {
 //                                    color: "#FFAAAA"
 //                                    radius: 5
 //                                }
-                                background: Component {
-                                    Rectangle {
-                                        color: "#FFAAAA"
-                                        Image {
-                                            source: "16px-Anchor_pictogram.svg.png"
-                                            anchors.right: parent.right
-                                            anchors.verticalCenter: parent.verticalCenter
+
+//                                background: Component {
+//                                    Rectangle {
+//                                        color: "#FFAAAA"
+//                                        Image {
+//                                            source: "16px-Anchor_pictogram.svg.png"
+//                                            anchors.right: parent.right
+//                                            anchors.verticalCenter: parent.verticalCenter
+//                                        }
+//                                    }
+//                                }
+
+                                background: TextField {
+                                    anchors.fill: parent
+                                    style: TextFieldStyle {
+                                        background: Rectangle {
+                                            anchors.fill: parent
+                                            color: "pink"
                                         }
+                                        textColor: "red"
+                                    }
+                                    Image {
+                                        source: "16px-Anchor_pictogram.svg.png"
+                                        anchors.right: parent.right
+                                        anchors.verticalCenter: parent.verticalCenter
                                     }
                                 }
 
-                                textColor: "white"
-                                selectedTextColor: "red"
-                                selectionColor: "orange"
+//                                textColor: "black"
+                                selectedTextColor: "white"
+                                selectionColor: "black"
 //                                label: Component {
 //                                    Label {
 //                                        width: 5
@@ -291,6 +418,16 @@ ApplicationWindow {
                                 ListElement { text: "Coconut" }
                             }
                             KeyNavigation.tab: xTextField
+                        }
+                        TextField {
+                            text: "AAAAAAAAAAAAAAA"
+                            style: TextFieldStyle {
+                                background: Rectangle {
+                                    anchors.fill: parent
+                                    color: "pink"
+                                }
+                                textColor: "red"
+                            }
                         }
                     }
 
