@@ -236,7 +236,7 @@ ApplicationWindow {
                             id: xTextField
                             placeholderText: qsTr("x")
                             text: squareBinding.x
-                            KeyNavigation.tab: yTextField
+//                            KeyNavigation.tab: yTextField
                             onFocusChanged: {
                                 updatePositionByPropertyChanged()
                             }
@@ -257,7 +257,7 @@ ApplicationWindow {
                             id: yTextField
                             placeholderText: qsTr("y")
                             text: squareBinding.y
-                            KeyNavigation.tab: defaultButton
+//                            KeyNavigation.tab: defaultButton
                             onFocusChanged: {
                                 updatePositionByPropertyChanged()
                             }
@@ -287,7 +287,7 @@ ApplicationWindow {
                                     squareBinding.x = xTextField.text
                                 }
 
-                                KeyNavigation.tab: grid
+//                                KeyNavigation.tab: grid
                             }
                             Text {
                                 anchors.verticalCenter: defaultButton.verticalCenter
@@ -300,54 +300,60 @@ ApplicationWindow {
                             text: "Non Default"
                         }
 
-                        Grid {
-                            id: grid
-                            width: 100; height: 100
-                            columns: 2
+                        FocusScope {
+                            width: grid.width
+                            height: grid.height
+                            activeFocusOnTab: true
 
-                            Rectangle {
-                                id: topLeft
-                                width: 50; height: 50
-                                color: focus ? "red" : "lightgray"
-                                focus: true
+                            Grid {
+                                id: grid
+                                width: 100; height: 100
+                                columns: 2
 
-                                KeyNavigation.right: topRight
-                                KeyNavigation.down: bottomLeft
-                                KeyNavigation.tab: comboBoxCustom
+                                Rectangle {
+                                    id: topLeft
+                                    width: 50; height: 50
+                                    color: focus ? "red" : "lightgray"
+                                    focus: true
+
+                                    KeyNavigation.right: topRight
+                                    KeyNavigation.down: bottomLeft
+    //                                KeyNavigation.tab: comboBoxCustom
+                                }
+
+                                Rectangle {
+                                    id: topRight
+                                    width: 50; height: 50
+                                    color: focus ? "red" : "lightgray"
+
+                                    KeyNavigation.left: topLeft
+                                    KeyNavigation.down: bottomRight
+                                }
+
+                                Rectangle {
+                                    id: bottomLeft
+                                    width: 50; height: 50
+                                    color: focus ? "red" : "lightgray"
+
+                                    KeyNavigation.right: bottomRight
+                                    KeyNavigation.up: topLeft
+                                }
+
+                                Rectangle {
+                                    id: bottomRight
+                                    width: 50; height: 50
+                                    color: focus ? "red" : "lightgray"
+
+                                    KeyNavigation.left: bottomLeft
+                                    KeyNavigation.up: topRight
+                                }
+
+    //                            onFocusChanged: {
+    //                                topLeft.forceActiveFocus()
+    //                            }
+
+    //                            KeyNavigation.tab: comboBoxCustom
                             }
-
-                            Rectangle {
-                                id: topRight
-                                width: 50; height: 50
-                                color: focus ? "red" : "lightgray"
-
-                                KeyNavigation.left: topLeft
-                                KeyNavigation.down: bottomRight
-                            }
-
-                            Rectangle {
-                                id: bottomLeft
-                                width: 50; height: 50
-                                color: focus ? "red" : "lightgray"
-
-                                KeyNavigation.right: bottomRight
-                                KeyNavigation.up: topLeft
-                            }
-
-                            Rectangle {
-                                id: bottomRight
-                                width: 50; height: 50
-                                color: focus ? "red" : "lightgray"
-
-                                KeyNavigation.left: bottomLeft
-                                KeyNavigation.up: topRight
-                            }
-
-                            onFocusChanged: {
-                                topLeft.forceActiveFocus()
-                            }
-
-                            KeyNavigation.tab: comboBoxCustom
                         }
 
                         // カスタマイズは https://forum.qt.io/topic/32611/how-to-customize-combobox-from-qtquick-controls/7 参照
@@ -362,6 +368,7 @@ ApplicationWindow {
                             }
                             width: 200
                             height: 25
+                            editable: false
                             onCurrentIndexChanged: console.debug(currentText + ", " + cbItems.get(currentIndex).color)
                             style: ComboBoxStyle {
 //                                background: Rectangle {
@@ -379,15 +386,16 @@ ApplicationWindow {
 //                                        }
 //                                    }
 //                                }
-
                                 background: TextField {
                                     anchors.fill: parent
+                                    activeFocusOnTab: false
                                     style: TextFieldStyle {
                                         background: Rectangle {
                                             anchors.fill: parent
                                             color: "pink"
                                         }
                                         textColor: "red"
+
                                     }
                                     Image {
                                         source: "16px-Anchor_pictogram.svg.png"
@@ -408,7 +416,7 @@ ApplicationWindow {
 //                                }
 
                             }
-                            KeyNavigation.tab: comboBoxDefault
+//                            KeyNavigation.tab: comboBoxDefault
                         }
                         ComboBox {
                             id: comboBoxDefault
@@ -417,7 +425,7 @@ ApplicationWindow {
                                 ListElement { text: "Apple" }
                                 ListElement { text: "Coconut" }
                             }
-                            KeyNavigation.tab: xTextField
+//                            KeyNavigation.tab: xTextField
                         }
                         TextField {
                             text: "AAAAAAAAAAAAAAA"
