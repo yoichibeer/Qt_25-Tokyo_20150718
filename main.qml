@@ -10,7 +10,7 @@ import Qt_25_Tokyo_20150718 1.0
 ApplicationWindow {
     title: qsTr("Hello World")
     width: 1280
-    height: 480
+    height: 640
     visible: true
 
     color: constant.backgroundColor
@@ -244,7 +244,6 @@ ApplicationWindow {
                                     border.width: 1
                                 }
                             }
-                            KeyNavigation.backtab: textFieldX
                         }
                         TextField {
                             id: yTextField
@@ -435,7 +434,7 @@ ApplicationWindow {
                                 }
                                 textColor: "red"
                             }
-                            KeyNavigation.tab: xTextField
+                            KeyNavigation.tab: radio
                         }
                         TabView {
                             activeFocusOnTab: false
@@ -452,14 +451,77 @@ ApplicationWindow {
                                 focus: false
                                 Rectangle { color: "red" }
                             }
-//                            Tab {
-//                                title: "Blue"
-//                                Rectangle { color: "blue" }
-//                            }
-//                            Tab {
-//                                title: "Green"
-//                                Rectangle { color: "green" }
-//                            }
+                            Tab {
+                                title: "Blue"
+                                Rectangle { color: "blue" }
+                            }
+                            Tab {
+                                title: "Green"
+                                Rectangle { color: "green" }
+                            }
+                        }
+                        FocusScope {
+                            id: radio
+                            activeFocusOnTab: true
+                            width: column.width
+                            height: column.height
+                            Column {
+                                id: column
+                                ExclusiveGroup { id: tabPositionGroup }
+                                RadioButton {
+                                    id: aRadio
+                                    checked: true
+                                    text: "A"
+                                    exclusiveGroup: tabPositionGroup
+                                    focus: true
+                                    activeFocusOnTab: false
+                                    onClicked: {
+                                        focus = true
+                                    }
+                                    onFocusChanged: {
+                                        if (focus) checked = true
+                                    }
+
+                                    Keys.onUpPressed: {
+                                        bRadio.focus = true
+                                    }
+                                    Keys.onDownPressed: {
+                                        bRadio.focus = true
+                                    }
+                                }
+                                RadioButton {
+                                    id: bRadio
+                                    text: "B"
+                                    exclusiveGroup: tabPositionGroup
+                                    activeFocusOnTab: false
+                                    checked: check
+                                    onClicked: {
+                                        focus = true
+                                    }
+                                    onFocusChanged: {
+                                        if (focus) checked = true
+                                    }
+                                    Keys.onUpPressed: {
+                                        aRadio.focus = true
+                                    }
+                                    Keys.onDownPressed: {
+                                        aRadio.focus = true
+                                    }
+                                }
+                            }
+                            KeyNavigation.backtab: textFieldX
+                        }
+                        CheckBox {
+                            text: "checkbox"
+                            onCheckedChanged: {
+                                if (checked) {
+                                    aRadio.focus = true
+                                    aRadio.check = true
+                                } else {
+                                    bRadio.focus = true
+                                    bRadio.check = true
+                                }
+                            }
                         }
                     }
 
