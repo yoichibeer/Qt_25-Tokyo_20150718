@@ -244,6 +244,7 @@ ApplicationWindow {
                                     border.width: 1
                                 }
                             }
+                            KeyNavigation.backtab: textFieldX
                         }
                         TextField {
                             id: yTextField
@@ -425,6 +426,7 @@ ApplicationWindow {
 //                            KeyNavigation.tab: xTextField
                         }
                         TextField {
+                            id: textFieldX
                             text: "AAAAAAAAAAAAAAA"
                             style: TextFieldStyle {
                                 background: Rectangle {
@@ -433,6 +435,31 @@ ApplicationWindow {
                                 }
                                 textColor: "red"
                             }
+                            KeyNavigation.tab: xTextField
+                        }
+                        TabView {
+                            activeFocusOnTab: false
+                            focus: false
+                            onActiveFocusChanged: {
+                                if (activeFocus) {
+
+                                }
+                            }
+
+                            Tab {
+                                title: "Red"
+                                activeFocusOnTab: false
+                                focus: false
+                                Rectangle { color: "red" }
+                            }
+//                            Tab {
+//                                title: "Blue"
+//                                Rectangle { color: "blue" }
+//                            }
+//                            Tab {
+//                                title: "Green"
+//                                Rectangle { color: "green" }
+//                            }
                         }
                     }
 
