@@ -1,43 +1,76 @@
 #include "squarebinding.h"
 
+#include <QTimer>
 #include <QDebug>
 
+
+
+Position::Position()
+    :x_(200), y_(50)
+{
+    timer_.start(1000);
+    connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
+}
+
+double Position::getX() const { return x_; }
+void Position::setX(double x) { x_ = x; }
+
+double Position::getY() const { return y_; }
+void Position::setY(double y) { y_ = y; }
+
+void Position::update()
+{
+    x_ += 10.123456789; if (x_ > 200) x_ = 0;
+    y_ += 10.987654321; if (y_ > 200) y_ = 0;
+    emit updated();
+}
+
+
 SquareBinding::SquareBinding()
-    : x_(200)
-    , y_(50)
 {
+    connect(&position_, SIGNAL(updated()), this, SLOT(updatePosition()));
 }
 
 
-
-double SquareBinding::x() const
+QString SquareBinding::x() const
 {
-    return x_;
+    return QString::number(position_.getX(), 'f', 2);
 }
-void SquareBinding::setX(double x)
+void SquareBinding::setX(QString xStr)
 {
-//    if (x_ == x)
-//    {
-//        return;
-//    }
+    qDebug() << "HELLO" << x() << ", " << xStr;
+    if (x() == QString::number(xStr.toDouble(), 'f', 2))
+    {
+        return;
+    }
 
-    qDebug() << __FUNCTION__ << x;
+    qDebug() << __FUNCTION__ << xStr;
 
-    x_ = x;
+    position_.setX(xStr.toDouble());
+
     emit xChanged();
 }
 
-double SquareBinding::y() const
+QString SquareBinding::y() const
 {
-    return y_;
+    return QString::number(position_.getY(), 'f', 2);;
 }
-void SquareBinding::setY(double y)
+void SquareBinding::setY(QString yStr)
 {
-//    if (y_ == y)
-//    {
-//        return;
-//    }
+    if (y() == QString::number(yStr.toDouble(), 'f', 2))
+    {
+        return;
+    }
 
-    y_ = y;
+    qDebug() << __FUNCTION__ << yStr;
+
+    position_.setY(yStr.toDouble());
+
+    emit yChanged();
+}
+
+void SquareBinding::updatePosition()
+{
+    emit xChanged();
     emit yChanged();
 }

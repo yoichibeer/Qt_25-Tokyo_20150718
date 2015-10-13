@@ -1,15 +1,15 @@
-﻿import QtQuick 2.4
+﻿import QtQuick 2.5
 import QtQuick.Dialogs 1.2
 
-import QtQuick.Controls 1.3
-import QtQuick.Controls.Styles 1.3
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 
-import Qt_24_Tokyo_20150718 1.0
+import Qt_25_Tokyo_20150718 1.0
 
 ApplicationWindow {
     title: qsTr("Hello World")
-    width: 640
+    width: 1280
     height: 480
     visible: true
 
@@ -154,12 +154,11 @@ ApplicationWindow {
             anchors.fill: parent
             spacing: 4
 
-            Rectangle {
-                color: "#000000"
-                width: 100
+            OpenGLView {
+                color: "#115599"
+                width: 640
                 Layout.fillHeight: true
 //                Layout.leftMargin: 4
-                visible: true
             }
 
             SplitView {
@@ -175,12 +174,11 @@ ApplicationWindow {
 
                     SquareBinding {
                         id: squareBinding
-                        onXChanged:
-                            xTextField.text = x;
+                        onXChanged: xTextField.text = x;
+                        onYChanged: yTextField.text = y;
                     }
 
                     Rectangle {
-                        id: square
                         width: 100
                         height: 100
                         x: squareBinding.x
@@ -195,31 +193,25 @@ ApplicationWindow {
 
                             anchors.fill: parent
 
-                            drag.target: square
+                            drag.target: parent
                             drag.axis: Drag.XAndYAxis
 
                             drag.threshold: 0
 
-                            drag.minimumX: - square.width + 5
+                            drag.minimumX: - parent.width + 5
                             drag.maximumX: drawingView.width - 5
 
-                            drag.minimumY: - square.height + 5
+                            drag.minimumY: - parent.height + 5
                             drag.maximumY: drawingView.height - 5
 
-                            onPressed: square.dragging = true
-                            onReleased: square.dragging = false
+                            onPressed: parent.dragging = true
+                            onReleased: parent.dragging = false
 
                             onPositionChanged: {
-                                squareBinding.x = square.x
-                                squareBinding.y = square.y
+                                squareBinding.x = parent.x
+                                squareBinding.y = parent.y
                             }
                         }
-        //                onXChanged: {
-        //                    squareBinding.x = square.x
-        //                }
-        //                onYChanged: {
-        //                    squareBinding.y = square.y
-        //                }
                     }
                 }
 
@@ -414,6 +406,11 @@ ApplicationWindow {
 //                                        color: "red"
 //                                    }
 //                                }
+
+                                label: Text {
+                                    color: "red"
+                                    text: control.currentText
+                                }
 
                             }
 //                            KeyNavigation.tab: comboBoxDefault

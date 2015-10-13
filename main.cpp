@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     domCompareTest.test();
 
     // QMLで使えるようにクラス登録
-    qmlRegisterType<SquareBinding>("Qt_24_Tokyo_20150718", 1, 0, "SquareBinding");
+    qmlRegisterType<SquareBinding>("Qt_25_Tokyo_20150718", 1, 0, "SquareBinding");
 
     // アプリ起動
     QQmlApplicationEngine engine;
